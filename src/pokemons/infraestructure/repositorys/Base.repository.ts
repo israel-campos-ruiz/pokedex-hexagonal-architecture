@@ -1,4 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export abstract class BaseRepository<T> {
-  abstract create(_entity: T): Promise<T>;
+export interface BaseRepository<T> {
+  create?(_entity: T): Promise<T>;
 }

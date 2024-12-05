@@ -7,12 +7,10 @@ import { CreatePokemonDto } from 'src/pokemons/domain/dto/create-pokemon.dto';
 import { createPokemonQuery } from '../mongoDbQuerys/mongoQuerys';
 import { mapFromInfrastructure } from 'src/pokemons/domain/mappers/Pokemon.mapper';
 @Injectable()
-export class PokemonMongoDbRepository extends BaseRepository<Pokemon> {
+export class PokemonMongoDbRepository implements BaseRepository<Pokemon> {
   constructor(
     @InjectModel(Pokemon.name) private readonly pokemonModel: Model<Pokemon>,
-  ) {
-    super();
-  }
+  ) {}
   //   async create(entity: CreatePokemonDto): Promise<Pokemon> { with mongoose
   //     const createdPokemon = await this.pokemonModel.create(entity);
   //     console.log(createdPokemon);
