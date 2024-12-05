@@ -21,8 +21,9 @@ export class PokemonMongoDbRepository extends BaseRepository<Pokemon> {
   // with mongodb native
   async create(entity: CreatePokemonDto): Promise<Pokemon> {
     const database = this.pokemonModel.db.db;
-    const pokemonMapped = mapFromInfrastructure(entity) as Pokemon;
+    const pokemonMapped = mapFromInfrastructure(entity);
     const result = await createPokemonQuery(database, pokemonMapped);
-    return result as Pokemon;
+    const pokemon = new this.pokemonModel(result);
+    return pokemon;
   }
 }

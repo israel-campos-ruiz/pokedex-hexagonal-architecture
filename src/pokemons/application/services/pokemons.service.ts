@@ -7,7 +7,7 @@ import { PokemonMongoDbRepository } from 'src/pokemons/infraestructure/repositor
 @Injectable()
 export class PokemonService implements ApplicationService<CreatePokemonDto> {
   constructor(
-    @Inject(REPOSITORY_TYPES.PokemonMongoDbRepository)
+    @Inject(REPOSITORY_TYPES.BaseRepository)
     private readonly repository: PokemonMongoDbRepository,
   ) {}
   async process(data?: CreatePokemonDto) {

@@ -15,7 +15,7 @@ import { REPOSITORY_TYPES } from './domain/types/repository.types';
     PokemonService,
     PokemonMongoDbRepository,
     {
-      provide: REPOSITORY_TYPES.PokemonMongoDbRepository,
+      provide: REPOSITORY_TYPES.BaseRepository,
       useClass: PokemonMongoDbRepository,
     },
   ],
