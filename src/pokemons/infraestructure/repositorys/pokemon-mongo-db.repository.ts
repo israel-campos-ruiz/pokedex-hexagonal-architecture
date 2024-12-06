@@ -4,7 +4,10 @@ import { Pokemon } from '../entities/pokemon.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreatePokemonDto } from 'src/pokemons/domain/dto/create-pokemon.dto';
-import { createPokemonQuery } from '../mongoDbQuerys/mongoQuerys';
+import {
+  createPokemonQuery,
+  findPokemonByDifferentParams,
+} from '../mongoDbQuerys/mongoQuerys';
 import { mapFromInfrastructure } from 'src/pokemons/domain/mappers/Pokemon.mapper';
 @Injectable()
 export class PokemonMongoDbRepository implements BaseRepository<Pokemon> {
@@ -23,5 +26,10 @@ export class PokemonMongoDbRepository implements BaseRepository<Pokemon> {
     const result = await createPokemonQuery(database, pokemonMapped);
     const pokemon = new this.pokemonModel(result);
     return pokemon;
+  }
+  async findOne(entity: string): Promise<Pokemon> {
+    const database = this.pokemonModel.db.db;
+    const result = await findPokemonByDifferentParams(database, entity);
+    return result[0] as unknown as Pokemon;
   }
 }
