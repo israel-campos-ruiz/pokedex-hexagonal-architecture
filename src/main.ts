@@ -22,6 +22,8 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
       exceptionFactory: (errors: ValidationError[]) => {
         const formattedErrors = errors.reduce((acc, error) => {
           const fieldErrors = Object.entries(error.constraints || {}).reduce(

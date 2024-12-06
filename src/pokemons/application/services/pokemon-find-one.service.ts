@@ -1,5 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ApplicationService } from 'src/commons/domain/application-service';
+import { PokemonDomain } from 'src/pokemons/domain/entities/Pokemon.domain';
 import { REPOSITORY_TYPES } from 'src/pokemons/domain/types/repository.types';
 import { BaseRepository } from 'src/pokemons/infraestructure/repositorys/Base.repository';
 
@@ -7,14 +8,21 @@ import { BaseRepository } from 'src/pokemons/infraestructure/repositorys/Base.re
 export class PokemonFindOneService implements ApplicationService<string> {
   constructor(
     @Inject(REPOSITORY_TYPES.BaseRepository)
-    private readonly repository: BaseRepository<string>,
+    private readonly repository: BaseRepository<
+      PokemonDomain | PokemonDomain[]
+    >,
   ) {}
 
   async process(data: string) {
     try {
-      return await this.repository.findOne(data);
+      const pokemon = await this.repository.findOne(data);
+      return pokemon;
     } catch (error) {
-      console.log(error);
+      throw new NotFoundException({
+        code: 0,
+        statusCode: 404,
+        message: `Pokemon not found ${error}`,
+      });
     }
   }
 }

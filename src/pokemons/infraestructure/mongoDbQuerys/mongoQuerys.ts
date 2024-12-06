@@ -1,5 +1,7 @@
+import { HttpStatus } from '@nestjs/common';
 import { Db, Collection, ObjectId } from 'mongodb';
 import { CreatePokemonDto } from 'src/pokemons/domain/dto/create-pokemon.dto';
+import { PokemonDomain } from 'src/pokemons/domain/entities/Pokemon.domain';
 
 export const createPokemonQuery = async (
   db: Db,
@@ -20,7 +22,7 @@ export const createPokemonQuery = async (
 
 export const findPokemonByDifferentParams = async (
   db: Db,
-  entity: string | number,
+  entity: ObjectId | string | number,
 ) => {
   const pokeCollection: Collection = db.collection('pokemons');
   const query = {
@@ -35,4 +37,36 @@ export const findPokemonByDifferentParams = async (
 
   const findPokemon = await pokeCollection.find(query).toArray();
   return findPokemon;
+};
+// TODO make a pagination
+export const findAllPokemon = async (db: Db) => {
+  const pokeCollection: Collection = db.collection('pokemons');
+  return await pokeCollection.find({}).toArray();
+};
+
+export const updateOnePokemon = async (
+  db: Db,
+  entity: PokemonDomain,
+  id: string,
+) => {
+  const pokeCollection: Collection = db.collection('pokemons');
+  const setQuery = Object.entries(entity).reduce(
+    (acc, [key, value]) => {
+      if (value !== undefined && value !== null) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
+  await pokeCollection.updateOne({ _id: new ObjectId(id) }, { $set: setQuery });
+  return {
+    status: HttpStatus.ACCEPTED,
+    message: `pokemon updated correctly`,
+  };
+};
+
+export const deleteOnePokemon = (db: Db, id: string) => {
+  const pokeCollection: Collection = db.collection('pokemons');
+  return pokeCollection.deleteOne({ _id: new ObjectId(id) });
 };
