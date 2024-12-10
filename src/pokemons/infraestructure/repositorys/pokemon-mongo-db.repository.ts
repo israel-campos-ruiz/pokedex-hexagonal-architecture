@@ -12,7 +12,7 @@ import {
   updateOnePokemon,
 } from '../mongoDbQuerys/mongoQuerys';
 import { ObjectId } from 'mongodb';
-import { mapFromInfrastructure } from 'src/pokemons/domain/mappers/Pokemon.mapper';
+
 @Injectable()
 export class PokemonMongoDbRepository implements BaseRepository<Pokemon> {
   constructor(
@@ -28,8 +28,7 @@ export class PokemonMongoDbRepository implements BaseRepository<Pokemon> {
   // * with mongodb native
   async create(entity: CreatePokemonDto): Promise<Pokemon> {
     const database = this.pokemonModel.db.db;
-    const pokemonMapped = mapFromInfrastructure(entity);
-    const result = await createPokemonQuery(database, pokemonMapped);
+    const result = await createPokemonQuery(database, entity);
     const pokemon = new this.pokemonModel(result);
     return pokemon;
   }

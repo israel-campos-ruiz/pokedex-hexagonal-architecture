@@ -1,4 +1,4 @@
-import { PokemonDomain } from '../entities/Pokemon.domain';
+import { PokemonDomain } from 'src/pokemons/domain/entities/Pokemon.domain';
 
 export const mapFromInfrastructure = (data: any): PokemonDomain => {
   return new PokemonDomain({

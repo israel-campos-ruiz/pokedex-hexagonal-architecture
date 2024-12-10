@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ApplicationService } from 'src/commons/domain/application-service';
 import { PokemonDomain } from 'src/pokemons/domain/entities/Pokemon.domain';
 import { REPOSITORY_TYPES } from 'src/pokemons/domain/types/repository.types';
@@ -11,6 +11,10 @@ export class PokemonDeleteOneService implements ApplicationService<string> {
     private readonly repository: BaseRepository<PokemonDomain>,
   ) {}
   async process(data?: string) {
-    return await this.repository.deleteOne(data);
+    try {
+      return await this.repository.deleteOne(data);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 }

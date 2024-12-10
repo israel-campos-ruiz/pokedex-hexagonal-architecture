@@ -5,6 +5,7 @@ import { CreatePokemonDto } from 'src/pokemons/domain/dto/create-pokemon.dto';
 import { PokemonDomain } from 'src/pokemons/domain/entities/Pokemon.domain';
 import { REPOSITORY_TYPES } from 'src/pokemons/domain/types/repository.types';
 import { BaseRepository } from 'src/pokemons/infraestructure/repositorys/Base.repository';
+import { mapFromInfrastructure } from '../mappers/Pokemon.mapper';
 
 @Injectable()
 export class PokemonService implements ApplicationService<CreatePokemonDto> {
@@ -14,7 +15,8 @@ export class PokemonService implements ApplicationService<CreatePokemonDto> {
   ) {}
   async process(data?: CreatePokemonDto) {
     try {
-      return await this.repository.create(data);
+      const pokemonMapped = mapFromInfrastructure(data);
+      return await this.repository.create(pokemonMapped);
     } catch (error) {
       if (error.code === 11000) {
         const errorMapped = PokemonErrorsMap[error.code];
@@ -22,23 +24,4 @@ export class PokemonService implements ApplicationService<CreatePokemonDto> {
       }
     }
   }
-  // create(createPokemonDto: CreatePokemonDto) {
-  //   return createPokemonDto;
-  // }
-
-  // findAll() {
-  //   return `This action returns all pokemons`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} pokemon`;
-  // }
-
-  // update(id: number, updatePokemonDto: UpdatePokemonDto) {
-  //   return `This action updates a #${id} pokemon ${updatePokemonDto}`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} pokemon`;
-  // }
 }
