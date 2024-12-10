@@ -1,9 +1,18 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
+
+import { UsersController } from './infrastructure/controllers/users.controller';
+import { UsersCreationService } from './application/services/users-creation-.service';
+import { UserRepositoryProvider } from './infrastructure/providers/User.provider';
+import { MongooseModule } from '@nestjs/mongoose';
+import { User, UserSchema } from './infrastructure/entities/User.entity';
+import { CommonsModule } from 'src/commons/commons.module';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersCreationService, UserRepositoryProvider],
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    CommonsModule,
+  ],
 })
 export class UsersModule {}
