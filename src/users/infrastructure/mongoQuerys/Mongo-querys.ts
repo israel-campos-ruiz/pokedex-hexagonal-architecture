@@ -43,6 +43,11 @@ export const findUserByEntityParams = async (db: Db, term: string) => {
         as: 'pokemon',
       },
     },
+    {
+      $project: {
+        password: 0,
+      },
+    },
   ];
   const response = await userCollection.aggregate(query).toArray();
   return response as unknown as UserDomain;
