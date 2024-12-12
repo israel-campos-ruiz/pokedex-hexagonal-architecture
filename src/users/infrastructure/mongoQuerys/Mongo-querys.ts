@@ -6,3 +6,48 @@ export const createUserQuery = async (db: Db, entity: UserDomain) => {
   await userCollection.insertOne(entity);
   return entity;
 };
+
+export const findAllUsers = async (db: Db) => {
+  const userCollection = db.collection('users');
+  const response = await userCollection
+    .aggregate([
+      {
+        $lookup: {
+          from: 'pokemons',
+          localField: 'pokemon',
+          foreignField: 'no',
+          as: 'pokemon',
+        },
+      },
+    ])
+    .toArray();
+  return response as unknown as UserDomain[];
+};
+export const findUserByEntityParams = async (db: Db, term: string) => {
+  const userCollection = db.collection('users');
+  const query = [
+    {
+      $match: {
+        $or: [
+          term ? { userId: term } : null,
+          term ? { email: term } : null,
+          term ? { name: term } : null,
+        ].filter(Boolean),
+      },
+    },
+    {
+      $lookup: {
+        from: 'pokemons',
+        localField: 'pokemon',
+        foreignField: 'no',
+        as: 'pokemon',
+      },
+    },
+  ];
+  const response = await userCollection.aggregate(query).toArray();
+  return response as unknown as UserDomain;
+};
+
+export const updateUser = async () => {};
+
+export const deleteUser = () => {};
