@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { UuidService } from './commons/application/services/uuid/uuid.service';
 import { CommonsModule } from './commons/commons.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { CommonsModule } from './commons/commons.module';
     AuthModule,
     UsersModule,
     CommonsModule,
+    EmailModule,
   ],
   controllers: [],
   providers: [UuidService],
