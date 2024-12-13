@@ -6,7 +6,6 @@ export class EncryptService {
     password: string,
     salt: number,
   ): Promise<string> {
-    console.log(password);
     return await bcrypt.hash(password, salt);
   }
   async comparePasswords(

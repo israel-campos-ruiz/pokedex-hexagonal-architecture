@@ -22,5 +22,11 @@ export class User {
     default: [],
   })
   pokemon: string[];
+
+  @Prop({ required: false, expires: '5m' })
+  otp: number;
+
+  @Prop({ type: Date })
+  otpExpiresAt?: Date;
 }
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -21,5 +21,6 @@ import { FindOneService } from './application/services/find-one.service';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     CommonsModule,
   ],
+  exports: [MongooseModule],
 })
 export class UsersModule {}

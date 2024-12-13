@@ -1,23 +1,22 @@
-import { Controller, Get, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  Post,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 
 import { AuthService } from 'src/auth/application/services/auth.service';
+import { LocalAuthGuard } from '../guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @UseGuards(LocalAuthGuard)
+  @Post()
+  async classicSignIn(@Body() args: any) {
+    return await this.authService.process(args);
   }
 }

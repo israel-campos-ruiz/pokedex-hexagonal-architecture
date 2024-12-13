@@ -5,13 +5,17 @@ export class UserDomain {
   userId?: string;
   pokemon?: Array<any>;
   _id?: any;
+  otp?: any;
+  otpExpiresAt?: Date;
   constructor(data: {
     _id?: any;
+    otp?: any;
     name: string;
     email: string;
     password: string;
     userId: string;
     pokemon: Array<any>;
+    otpExpiresAt?: Date;
   }) {
     this._id = data?._id;
     this.name = data.name;
@@ -19,5 +23,26 @@ export class UserDomain {
     this.password = data.password;
     this.userId = data.userId;
     this.pokemon = data.pokemon;
+    this.otp = data.otp;
+    this.otpExpiresAt = data.otpExpiresAt;
+  }
+
+  public setOtp(otpCode: any) {
+    return (this.otp = otpCode);
+  }
+  /**
+   * method to compare passwords.
+   * @param plainPassword plain password.
+   * @param compareFunction callback to handle the logic on another layer.
+   * @returns  Boolean to confirm both passwords are the same
+   */
+  public isPasswordValid(
+    plainPassword: string,
+    compareFunction: (plain: string, hashed: string) => boolean,
+  ): boolean {
+    if (!this.password) {
+      throw new Error('Password hash not set');
+    }
+    return compareFunction(plainPassword, this.password);
   }
 }
