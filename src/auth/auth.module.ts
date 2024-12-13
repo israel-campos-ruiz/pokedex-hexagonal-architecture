@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AuthService } from './application/services/auth.service';
+import { AuthClassicService } from './application/services/auth-classic.service';
 import { AuthController } from './infraestructure/controllers/auth.controller';
 import { AuthRepositoryProvider } from './infraestructure/providers/Auth.provider';
 import { UsersModule } from 'src/users/users.module';
@@ -8,14 +8,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthErrorHandler } from './application/services/errors-auth.service';
 import { LocalService } from './application/strategies/local.service';
 import { PassportModule } from '@nestjs/passport';
+import { JwtService } from 'src/commons/application/services/jwt/jwt.service';
 
 @Module({
   controllers: [AuthController],
   providers: [
-    AuthService,
+    AuthClassicService,
     AuthRepositoryProvider,
     AuthErrorHandler,
     LocalService,
+    JwtService,
   ],
   imports: [
     UsersModule,

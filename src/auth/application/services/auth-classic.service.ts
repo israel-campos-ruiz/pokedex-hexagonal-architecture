@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Inject, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+
 import { REPOSITORY_TYPES_AUTH } from 'src/auth/domain/types/repository.types';
 import { BaseAuthRepository } from 'src/auth/infraestructure/repositorys/Base-auth-repository';
 import { ApplicationService } from 'src/commons/domain/application-service';
 import { UserDomain } from 'src/users/domain/entities/user.domain';
 import * as bcrypt from 'bcrypt';
 import { AuthErrorHandler } from './errors-auth.service';
+import { JwtService } from 'src/commons/application/services/jwt/jwt.service';
 @Injectable()
-export class AuthService implements ApplicationService<any> {
+export class AuthClassicService implements ApplicationService<any> {
   constructor(
     @Inject(REPOSITORY_TYPES_AUTH.BaseRepositoryAuth)
     private readonly repositoryAuth: BaseAuthRepository<UserDomain>,
@@ -38,7 +39,7 @@ export class AuthService implements ApplicationService<any> {
       }
       const { password, _id, userId, ...rest } = findUser;
 
-      const jwtUser = this.jwtService.sign(rest);
+      const jwtUser = this.jwtService.createJwt(rest);
       return {
         status: 200,
         ok: true,

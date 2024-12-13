@@ -1,5 +1,5 @@
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
-import { AuthErrorsMap } from '../mappers/mapper-auth.errors';
+import { AuthErrorsMap } from '../mappers/map-auth.errors';
 
 @Injectable()
 export class AuthErrorHandler {
