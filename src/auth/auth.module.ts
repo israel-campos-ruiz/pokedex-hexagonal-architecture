@@ -6,9 +6,11 @@ import { AuthRepositoryProvider } from './infraestructure/providers/Auth.provide
 import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthErrorHandler } from './application/services/errors-auth.service';
-import { LocalService } from './application/strategies/local.service';
+
 import { PassportModule } from '@nestjs/passport';
 import { JwtService } from 'src/commons/application/services/jwt/jwt.service';
+import { LocalStrategy } from './application/strategies/local.strategy';
+import { OtpGenerateService } from './application/services/otp-generate.service';
 
 @Module({
   controllers: [AuthController],
@@ -16,8 +18,9 @@ import { JwtService } from 'src/commons/application/services/jwt/jwt.service';
     AuthClassicService,
     AuthRepositoryProvider,
     AuthErrorHandler,
-    LocalService,
+    LocalStrategy,
     JwtService,
+    OtpGenerateService,
   ],
   imports: [
     UsersModule,

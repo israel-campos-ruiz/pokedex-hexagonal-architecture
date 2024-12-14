@@ -6,6 +6,8 @@ import { UsersModule } from './users/users.module';
 import { UuidService } from './commons/application/services/uuid/uuid.service';
 import { CommonsModule } from './commons/commons.module';
 import { EmailModule } from './email/email.module';
+import { BattleSimulationModule } from './battle-simulation/battle-simulation.module';
+import { SendMailModule } from './send-mail/send-mail.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { EmailModule } from './email/email.module';
     UsersModule,
     CommonsModule,
     EmailModule,
+    BattleSimulationModule,
+    SendMailModule,
   ],
   controllers: [],
   providers: [UuidService],

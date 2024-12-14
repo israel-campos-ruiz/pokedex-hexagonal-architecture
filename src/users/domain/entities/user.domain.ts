@@ -12,9 +12,9 @@ export class UserDomain {
     otp?: any;
     name: string;
     email: string;
-    password: string;
-    userId: string;
-    pokemon: Array<any>;
+    password?: string;
+    userId?: string;
+    pokemon?: Array<any>;
     otpExpiresAt?: Date;
   }) {
     this._id = data?._id;
@@ -27,9 +27,23 @@ export class UserDomain {
     this.otpExpiresAt = data.otpExpiresAt;
   }
 
-  public setOtp(otpCode: any) {
-    return (this.otp = otpCode);
+  public setOtp(otp: string, expiresAt: Date) {
+    this.otp = otp;
+    this.otpExpiresAt = expiresAt;
   }
+
+  public isOtpValid(otpToValidate: string): boolean {
+    if (!this.otp || !this.otpExpiresAt) {
+      return null;
+    }
+
+    if (this.otpExpiresAt < new Date()) {
+      return null;
+    }
+
+    return this.otp === otpToValidate;
+  }
+
   /**
    * method to compare passwords.
    * @param plainPassword plain password.
