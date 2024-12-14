@@ -17,7 +17,7 @@ export class MongoDBModule {
             const authSource = configService.get<string>('DB_AUTH_SOURCE');
             const dbName = configService.get<string>('DB_NAME');
             const uri = `mongodb://${username}:${password}@${host}:${port}/${dbName}?authSource=${authSource}`;
-            console.log('MongoDB URI:', uri);
+            console.log(uri);
             return { uri };
           },
           inject: [ConfigService],
