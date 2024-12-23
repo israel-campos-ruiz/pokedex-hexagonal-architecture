@@ -27,6 +27,6 @@ export class User {
   otp: number;
 
   @Prop({ type: Date })
-  otpExpiresAt?: Date;
+  expiresAt?: Date;
 }
 export const UserSchema = SchemaFactory.createForClass(User);

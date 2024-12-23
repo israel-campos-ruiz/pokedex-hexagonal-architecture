@@ -25,7 +25,7 @@ export const updateUserOtp = async ({
   const userCollection: Collection = db.collection('users');
   const query = {
     otp: args.otp,
-    expiresAt: args.otpExpiresAt,
+    expiresAt: args.expiresAt,
   };
   await userCollection.updateOne({ email: args.email }, { $set: query });
   return args;

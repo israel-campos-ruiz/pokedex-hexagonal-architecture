@@ -25,7 +25,7 @@ export class OtpGenerateService
     const user = new UserDomain({
       email: args.email,
       otp,
-      otpExpiresAt: expiresAt,
+      expiresAt: expiresAt,
       name: userFind.name,
       _id: userFind._id,
       password: userFind.password,

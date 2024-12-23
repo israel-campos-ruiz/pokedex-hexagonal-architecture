@@ -28,13 +28,14 @@ export class AuthOtpService implements ApplicationService<any> {
         password: findUser.password,
         pokemon: findUser.pokemon,
         otp: findUser.otp,
-        otpExpiresAt: findUser.otpExpiresAt,
+        expiresAt: findUser.expiresAt,
       });
 
       const isValidOtp = user.isOtpValid(data);
       if (!isValidOtp) {
         this.authErrorService.handleError('INVALID_OTP');
       }
+      console.log(isValidOtp);
       const { password, _id, userId, ...rest } = findUser;
 
       const jwtUser = this.jwtService.createJwt(rest);

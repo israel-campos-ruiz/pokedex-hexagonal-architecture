@@ -6,7 +6,7 @@ export class UserDomain {
   pokemon?: Array<any>;
   _id?: any;
   otp?: any;
-  otpExpiresAt?: Date;
+  expiresAt?: Date;
   constructor(data: {
     _id?: any;
     otp?: any;
@@ -15,7 +15,7 @@ export class UserDomain {
     password?: string;
     userId?: string;
     pokemon?: Array<any>;
-    otpExpiresAt?: Date;
+    expiresAt?: Date;
   }) {
     this._id = data?._id;
     this.name = data.name;
@@ -24,16 +24,16 @@ export class UserDomain {
     this.userId = data.userId;
     this.pokemon = data.pokemon;
     this.otp = data.otp;
-    this.otpExpiresAt = data.otpExpiresAt;
+    this.expiresAt = data.expiresAt;
   }
 
   public setOtp(otp: string, expiresAt: Date) {
     this.otp = otp;
-    this.otpExpiresAt = expiresAt;
+    this.expiresAt = expiresAt;
   }
 
   public isOtpValid(otpToValidate: string): boolean {
-    if (this.otpExpiresAt < new Date()) {
+    if (this.expiresAt < new Date()) {
       return null;
     }
 
