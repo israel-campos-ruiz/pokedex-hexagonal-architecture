@@ -2,6 +2,8 @@ import { ConfigService } from '@nestjs/config';
 import { BaseSendNotification } from './Base-send-notification.repository';
 import * as nodemailer from 'nodemailer';
 import { Injectable } from '@nestjs/common';
+import { formatSpanishDate } from 'src/commons/utils/formate-date-spanish.util';
+import { RenderEmailHtmlService } from 'src/commons/application/services/render-email-html/render-email-html.service';
 // TODO remove this any type
 @Injectable()
 export class SendNotificationsRepository implements BaseSendNotification<any> {
@@ -11,6 +13,7 @@ export class SendNotificationsRepository implements BaseSendNotification<any> {
       USER_EMAIL: string;
       PASSWORD_EMAIL: string;
     }>,
+    private readonly renderEmailHtmlService: RenderEmailHtmlService,
   ) {
     this.transporter = nodemailer.createTransport({
       host: 'smtp.mailtrap.io',
@@ -23,11 +26,20 @@ export class SendNotificationsRepository implements BaseSendNotification<any> {
     });
   }
   async sendEmail(data: any): Promise<any> {
+    const emailHtml = this.renderEmailHtmlService.process(
+      'otp-email.template',
+      {
+        name: data.name,
+        otp: data.otp,
+        expiresAt: formatSpanishDate(data.otpExpiresAt),
+      },
+    );
+
     const mailOptions = {
       from: '"Pokedex App" <noreply@pokedex.com>',
       to: data.email,
       subject: 'Tu código OTP para iniciar sesión',
-      text: `Hola ✅  ${data.name}, tu OTP es ${data.otp}. Expira el ${data.otpExpiresAt}.`,
+      html: emailHtml,
     };
     try {
       const result = await this.transporter.sendMail(mailOptions);
