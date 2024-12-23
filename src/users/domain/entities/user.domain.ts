@@ -33,15 +33,11 @@ export class UserDomain {
   }
 
   public isOtpValid(otpToValidate: string): boolean {
-    if (!this.otp || !this.otpExpiresAt) {
-      return null;
-    }
-
     if (this.otpExpiresAt < new Date()) {
       return null;
     }
 
-    return this.otp === otpToValidate;
+    return this.otp === otpToValidate.toString();
   }
 
   /**

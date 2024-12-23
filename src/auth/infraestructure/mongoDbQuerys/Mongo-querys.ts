@@ -6,10 +6,15 @@ export const findUserByEmail = async (
   entity: { email: string; password?: string },
 ) => {
   const userCollection: Collection = db.collection('users');
-  const userResponse = userCollection.findOne({ email: entity.email });
+  const userResponse = await userCollection.findOne({ email: entity.email });
   return userResponse as unknown as UserDomain;
 };
 
+export const findUserByOtp = async (db: Db, otp: number) => {
+  const userCollection: Collection = db.collection('users');
+  const userOtpResponse = await userCollection.findOne({ otp: otp.toString() });
+  return userOtpResponse as unknown as UserDomain;
+};
 export const updateUserOtp = async ({
   db,
   args,

@@ -11,6 +11,9 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtService } from 'src/commons/application/services/jwt/jwt.service';
 import { LocalStrategy } from './application/strategies/local.strategy';
 import { OtpGenerateService } from './application/services/otp-generate.service';
+import { SendNotificationModule } from 'src/send-notification/send-notification.module';
+import { AuthOtpService } from './application/services/auth-otp.service';
+import { OtpStrategy } from './application/strategies/otp.strategy';
 
 @Module({
   controllers: [AuthController],
@@ -19,11 +22,14 @@ import { OtpGenerateService } from './application/services/otp-generate.service'
     AuthRepositoryProvider,
     AuthErrorHandler,
     LocalStrategy,
+    OtpStrategy,
     JwtService,
     OtpGenerateService,
+    AuthOtpService,
   ],
   imports: [
     UsersModule,
+    SendNotificationModule,
     PassportModule,
     JwtModule.register({
       global: true,

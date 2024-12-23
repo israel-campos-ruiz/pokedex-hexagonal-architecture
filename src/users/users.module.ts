@@ -8,6 +8,7 @@ import { User, UserSchema } from './infrastructure/entities/User.entity';
 import { CommonsModule } from 'src/commons/commons.module';
 import { UsersFindAllService } from './application/services/users-find-all.service';
 import { FindOneService } from './application/services/find-one.service';
+import { REPOSITORY_TYPES_USER } from './domain/types/repository.types';
 
 @Module({
   controllers: [UsersController],
@@ -21,6 +22,6 @@ import { FindOneService } from './application/services/find-one.service';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     CommonsModule,
   ],
-  exports: [MongooseModule],
+  exports: [MongooseModule, REPOSITORY_TYPES_USER.BaseRepositoryUser],
 })
 export class UsersModule {}

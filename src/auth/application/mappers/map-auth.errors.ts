@@ -10,4 +10,8 @@ export const AuthErrorsMap = {
     statusCode: HttpStatus.BAD_REQUEST,
     message: 'The password provided is incorrect',
   },
+  [AuthErrors.INVALID_OTP]: {
+    statusCode: HttpStatus.BAD_REQUEST,
+    message: 'The OTP provided is incorrect',
+  },
 };
