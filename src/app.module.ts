@@ -4,7 +4,6 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { UuidService } from './commons/application/services/uuid/uuid.service';
 import { CommonsModule } from './commons/commons.module';
-import { EmailModule } from './email/email.module';
 import { BattleSimulationModule } from './battle-simulation/battle-simulation.module';
 import { DbModule } from './config/db/db.module';
 import { ConfigModule } from '@nestjs/config';
@@ -21,7 +20,6 @@ import { SendNotificationModule } from './send-notification/send-notification.mo
     AuthModule,
     UsersModule,
     CommonsModule,
-    EmailModule,
     BattleSimulationModule,
     DbModule.forRoot(),
     EventEmitterModule.forRoot(),
