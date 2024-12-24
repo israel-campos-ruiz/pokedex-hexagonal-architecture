@@ -6,6 +6,7 @@ export class UserDomain {
   pokemon?: Array<any>;
   _id?: any;
   otp?: any;
+  isUsedOtp?: boolean;
   expiresAt?: Date;
   constructor(data: {
     _id?: any;
@@ -16,6 +17,7 @@ export class UserDomain {
     userId?: string;
     pokemon?: Array<any>;
     expiresAt?: Date;
+    isUsedOtp?: boolean;
   }) {
     this._id = data?._id;
     this.name = data.name;
@@ -25,6 +27,7 @@ export class UserDomain {
     this.pokemon = data.pokemon;
     this.otp = data.otp;
     this.expiresAt = data.expiresAt;
+    this.isUsedOtp = data.isUsedOtp;
   }
 
   public setOtp(otp: string, expiresAt: Date) {
@@ -54,5 +57,9 @@ export class UserDomain {
       throw new Error('Password hash not set');
     }
     return compareFunction(plainPassword, this.password);
+  }
+
+  public updateIsOtpUsed(isOtpUsed: boolean): boolean {
+    return (this.isUsedOtp = isOtpUsed);
   }
 }

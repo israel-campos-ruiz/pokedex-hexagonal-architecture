@@ -14,6 +14,7 @@ import { OtpGenerateService } from './application/services/otp-generate.service'
 import { SendNotificationModule } from 'src/send-notification/send-notification.module';
 import { AuthOtpService } from './application/services/auth-otp.service';
 import { OtpStrategy } from './application/strategies/otp.strategy';
+import { CommonsModule } from 'src/commons/commons.module';
 
 @Module({
   controllers: [AuthController],
@@ -29,6 +30,7 @@ import { OtpStrategy } from './application/strategies/otp.strategy';
   ],
   imports: [
     UsersModule,
+    CommonsModule,
     SendNotificationModule,
     PassportModule,
     JwtModule.register({

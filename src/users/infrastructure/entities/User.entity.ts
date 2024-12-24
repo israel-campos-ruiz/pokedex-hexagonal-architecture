@@ -26,6 +26,9 @@ export class User {
   @Prop({ required: false, expires: '5m' })
   otp: number;
 
+  @Prop({ default: false })
+  isOtpUsed: boolean;
+
   @Prop({ type: Date })
   expiresAt?: Date;
 }

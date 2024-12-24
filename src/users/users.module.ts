@@ -9,6 +9,7 @@ import { CommonsModule } from 'src/commons/commons.module';
 import { UsersFindAllService } from './application/services/users-find-all.service';
 import { FindOneService } from './application/services/find-one.service';
 import { REPOSITORY_TYPES_USER } from './domain/types/repository.types';
+import OtpListenerService from './application/listeners/otp-listener.service';
 
 @Module({
   controllers: [UsersController],
@@ -17,6 +18,7 @@ import { REPOSITORY_TYPES_USER } from './domain/types/repository.types';
     UserRepositoryProvider,
     UsersFindAllService,
     FindOneService,
+    OtpListenerService,
   ],
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),

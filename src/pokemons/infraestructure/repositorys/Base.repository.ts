@@ -3,6 +3,6 @@ export interface BaseRepository<T> {
   create?(entity: T): Promise<T>;
   findOne?(entity: any): Promise<T>;
   findAll?(): Promise<T[]>;
-  updateOne?(entity: T, id: any): Promise<T>;
+  updateOne?(id: T, args: any): Promise<T>;
   deleteOne?(entity: any): Promise<T>;
 }

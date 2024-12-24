@@ -6,6 +6,7 @@ import { BaseAuthRepository } from 'src/auth/infraestructure/repositorys/Base-au
 import { ApplicationService } from 'src/commons/domain/application-service';
 import { UserDomain } from 'src/users/domain/entities/user.domain';
 import { AuthErrorHandler } from './errors-auth.service';
+import { OtpEvent } from 'src/commons/application/events/otp.event/otp.event';
 
 @Injectable()
 export class AuthOtpService implements ApplicationService<any> {
@@ -14,6 +15,7 @@ export class AuthOtpService implements ApplicationService<any> {
     private readonly repositoryAuth: BaseAuthRepository<UserDomain>,
     private readonly jwtService: JwtService,
     private readonly authErrorService: AuthErrorHandler,
+    private readonly otpEvent: OtpEvent,
   ) {}
   async process(data?: any, metadata?: any) {
     try {
@@ -35,7 +37,9 @@ export class AuthOtpService implements ApplicationService<any> {
       if (!isValidOtp) {
         this.authErrorService.handleError('INVALID_OTP');
       }
+      // * event emitter to clean the otp
       console.log(isValidOtp);
+      this.otpEvent.emitOtpValidated(user.userId);
       const { password, _id, userId, ...rest } = findUser;
 
       const jwtUser = this.jwtService.createJwt(rest);

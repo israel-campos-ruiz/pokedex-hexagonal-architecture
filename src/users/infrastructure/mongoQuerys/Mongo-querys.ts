@@ -53,6 +53,25 @@ export const findUserByEntityParams = async (db: Db, term: string) => {
   return response as unknown as UserDomain;
 };
 
-export const updateUser = async () => {};
+export const updateUser = async (db: Db, entity: UserDomain) => {
+  console.log("soy la entity desde el query  de mongo", entity)
+  const userCollection = db.collection('users');
+  const setQuery = Object.entries(entity).reduce(
+    (acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
+  const user = await userCollection.updateOne(
+    { userId: entity.userId },
+    {
+      $set: setQuery,
+    },
+  );
+  return user as unknown as UserDomain;
+};
 
 export const deleteUser = () => {};

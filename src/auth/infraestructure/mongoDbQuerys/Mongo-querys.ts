@@ -30,3 +30,18 @@ export const updateUserOtp = async ({
   await userCollection.updateOne({ email: args.email }, { $set: query });
   return args;
 };
+export const updateUserByUserId = async ({
+  db,
+  args,
+}: {
+  db: Db;
+  args: UserDomain;
+}) => {
+  const userCollection: Collection = db.collection('users');
+  const query = {
+    otp: args.otp,
+    expiresAt: args.expiresAt,
+  };
+  await userCollection.updateOne({ userId: args.userId }, { $set: query });
+  return args;
+};

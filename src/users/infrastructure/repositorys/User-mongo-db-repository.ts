@@ -7,6 +7,7 @@ import {
   createUserQuery,
   findAllUsers,
   findUserByEntityParams,
+  updateUser,
 } from '../mongoQuerys/Mongo-querys';
 
 export class UserMongoRepository implements BaseUserRepository<UserDomain> {
@@ -26,6 +27,11 @@ export class UserMongoRepository implements BaseUserRepository<UserDomain> {
   async findOne(entity: string): Promise<UserDomain> {
     const database = this.userModel.db.db;
     const user = await findUserByEntityParams(database, entity);
+    return user;
+  }
+  async updateOne(entity: UserDomain): Promise<UserDomain> {
+    const database = this.userModel.db.db;
+    const user = await updateUser(database, entity);
     return user;
   }
 }
