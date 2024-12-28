@@ -54,7 +54,6 @@ export const findUserByEntityParams = async (db: Db, term: string) => {
 };
 
 export const updateUser = async (db: Db, entity: UserDomain) => {
-  console.log("soy la entity desde el query  de mongo", entity)
   const userCollection = db.collection('users');
   const setQuery = Object.entries(entity).reduce(
     (acc, [key, value]) => {
